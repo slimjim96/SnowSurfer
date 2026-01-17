@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float boostSpeed = 20f;
 
     Vector2 moveVector;
+    public bool canControlPlayer = true;
     InputAction moveAction;
     Rigidbody2D rb;
     SurfaceEffector2D surfaceEffector2D;
