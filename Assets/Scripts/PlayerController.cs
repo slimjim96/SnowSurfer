@@ -17,6 +17,10 @@ public class PlayerController : MonoBehaviour
     InputAction moveAction;
     Rigidbody2D rb;
     SurfaceEffector2D surfaceEffector2D;
+    float previousRotation;
+    float totalRotation;
+    int flipCount;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +35,7 @@ public class PlayerController : MonoBehaviour
         moveVector = moveAction.ReadValue<Vector2>();
         RotatePlyer();
         BoostPlayer();
+        CalculateFlips();
     }
 
     void RotatePlyer()
@@ -60,4 +65,26 @@ public class PlayerController : MonoBehaviour
             surfaceEffector2D.speed = baseSpeed;
         }
     }
+
+      void CalculateFlips()
+    {
+        float currentRotation = transform.rotation.eulerAngles.z;
+
+        totalRotation += Mathf.DeltaAngle(previousRotation, currentRotation);
+
+        if (totalRotation > 340 || totalRotation < -340)
+        {
+            flipCount += 1;
+            totalRotation = 0;
+            print(flipCount);
+        }
+
+        previousRotation = currentRotation;
+    }
+
+    public void DisableControls()
+    {
+        canControlPlayer = false;
+    }
+
 }
